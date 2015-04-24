@@ -1,0 +1,32 @@
+integrators = adams-bashforth.o
+integrator_deps = runge-kutta
+equations = duffing.o
+objects = duffing_solve.o $(integrators) $(equations)
+deps = integrator.h model.h
+RM = rm
+CXX=g++
+CXXFLAGS = -g -Wall
+
+all: duffing_solve
+
+duffing_solve : $(objects)
+	$(CXX) -o $@ $^
+
+-include .depend
+
+$(integrators).o : $(integrators).cp  $(integrator_deps)
+	$(CXX) -c -o $@ $^
+
+%.o: %.cp 
+	$(CXX) -c -o $@ $<
+
+
+#.PHONY: clean
+clean:
+	rm -f *.o duffing_solve
+	$(RM) .depend
+
+depend:
+	$(CXX) -MM $(CXXFLAGS) *.cp > .depend
+
+#-include .depend

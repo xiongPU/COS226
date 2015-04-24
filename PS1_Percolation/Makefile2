@@ -1,0 +1,24 @@
+Percolation = Percolation.o
+UF = UnionFind.o
+STAT = PercolationStats.o
+MC = MCPercolate.o
+objects = $(MC) $(STAT) $(Percolation) $(UF)
+deps = PercolationStats.hpp Percolation.hpp UnionFind.hpp
+RM = rm
+CXX=g++ -std=c++11
+CXXFLAGS = -c -Wall
+
+all: MCPercolate $(objects)
+
+MCPercolate : $(objects)
+	$(CXX) -o $@ $^
+
+%.o: %.cpp $(deps)
+	$(CXX) ${CXXFLAGS} -c -o $@ $<
+
+
+#.PHONY: clean
+clean:
+	rm MCPercolate $(objects)
+
+#-include .depend
