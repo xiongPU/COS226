@@ -1,0 +1,31 @@
+class1 = PalindromeCheck.o
+#class2 = Dequeue.o
+#UF = UnionFind.o
+#STAT = PercolationStats.o
+main = PalindromeMain.o
+#objects = $(MC) $(STAT) $(Percolation) $(UF)
+objects = $(main) $(class1) #$(class2)
+deps = Dequeue.h PalindromeCheck.h
+RM = rm
+CXX=g++ -std=c++11 -g
+CXXFLAGS = -c -Wall
+
+all: Palindrome
+
+Palindrome: $(objects)
+	$(CXX) -o $@ $^
+
+$(main): PalindromeMain.cpp $(deps)
+	$(CXX) ${CXXFLAGS} -c -o $@ $<
+
+$(class1): PalindromeCheck.cpp PalindromeCheck.h
+	$(CXX) ${CXXFLAGS} -c -o $@ $<
+
+#$(class2): Dequeue.h
+#	$(CXX) ${CXXFLAGS} -c -o $@ $<
+
+#.PHONY: clean
+clean:
+	rm -rf $(objects) 
+
+#-include .depend
